@@ -5,11 +5,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -35,6 +37,10 @@ public class MainActivity extends AppCompatActivity {
     TextView tvDispSalary;
     TextView tvDispRole;
     TextView tvDispCompanyName;
+    ImageView btnSort;
+
+
+
 
     //Firebase instance;
     private FirebaseAuth mAuth;
@@ -45,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     EmployeeDatabase employeeDatabase;
     DataAdapter adapter;
+
+    // To calculate to number of employee details try to enter the form
+    // we need to set for one user 10 employee has to data entry
+    int count=0;
+
 
 
 
@@ -61,16 +72,15 @@ public class MainActivity extends AppCompatActivity {
         tvDispSalary=findViewById(R.id.tvDisSalary);
         tvDispRole=findViewById(R.id.tvDisRole);
         tvDispCompanyName=findViewById(R.id.tvDisCompanyName);
+        btnSort=findViewById(R.id.btnSorting);
 
         mAuth=FirebaseAuth.getInstance();
 
         recyclerView=findViewById(R.id.recylerList);
-
         // Initialize database
         employeeDatabase=EmployeeDatabase.getDatabase(this);
         // store database values in data list
         dataList=employeeDatabase.employeeDao().getAll();
-
         // Initialize linear layout manager
         linearLayoutManager=new LinearLayoutManager(this);
         //setLayout
@@ -82,16 +92,32 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-
-
-
-        fab.setOnClickListener(new View.OnClickListener() {
+        //sort the data by clicking sort button
+        btnSort.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(MainActivity.this,EmployeeForm.class);
-                startActivity(intent);
-            }
+                sortData();
+                }
         });
+
+
+
+
+            fab.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    count++;
+                    // calling activity to fill form in employers data in EmployeeForm activity
+                    Intent intent = new Intent(MainActivity.this, EmployeeForm.class);
+                    startActivity(intent);
+                }
+            });
+
+
+    }
+    // to sort data
+    private void sortData() {
+        Toast.makeText(MainActivity.this, "Sort not implement yet", Toast.LENGTH_SHORT).show();
     }
 
     @Override

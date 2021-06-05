@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -57,7 +58,7 @@ public class EmployeeForm extends AppCompatActivity {
         spinner = findViewById(R.id.role);
         btnSave = findViewById(R.id.save);
 
-        // need to check id properly coz doubt in TextInputLayout id or TextInputEditText id
+
         name = findViewById(R.id.employeeName);
         salary = findViewById(R.id.employeeSalary);
         companyName = findViewById(R.id.employeeCompanyName);
@@ -65,6 +66,7 @@ public class EmployeeForm extends AppCompatActivity {
         // Initialize database
         employeeDatabase = EmployeeDatabase.getDatabase(this);
         dataList=employeeDatabase.employeeDao().getAll();
+
         // Initialize adapter
         adapter=new DataAdapter(EmployeeForm.this,dataList);
 
@@ -151,6 +153,7 @@ public class EmployeeForm extends AppCompatActivity {
 
             // inserting text to database
             employeeDatabase.employeeDao().insertDetails(data);
+            Toast.makeText(this, "Successfully Stored", Toast.LENGTH_SHORT).show();
             //clear edit text
 
             name.setText("");

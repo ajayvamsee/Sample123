@@ -14,8 +14,9 @@ public interface EmployeeDao {
     @Insert
     void insertDetails(EmployeeTable data);
 
-    @Query("select * from EmployeeDetails")
-    LiveData<List<EmployeeTable>> getDetails();
+    // get all data
+    @Query("SELECT * FROM EMPLOYEEDETAILS")
+    List<EmployeeTable> getAll();
 
     // Delete Query
     @Delete
@@ -25,11 +26,11 @@ public interface EmployeeDao {
     @Delete
     void reset(List<EmployeeTable> dataList);
 
-    // get all data
-    @Query("SELECT * FROM EMPLOYEEDETAILS")
-    List<EmployeeTable> getAll();
+    /*
+        @Query("select * from EmployeeDetails")
+    LiveData<List<EmployeeTable>> getDetails();
 
-      /* @Query("UPDATE EmployeeDetails SET text = :sText WHERE ID = sID")
+       @Query("UPDATE EmployeeDetails SET text = :sText WHERE ID = sID")
     void update(int sID,String sText);*/
 /*
     @Query("delete from EmployeeDetails")

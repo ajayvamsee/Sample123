@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -52,11 +53,11 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         employeeDatabase=EmployeeDatabase.getDatabase(context);
 
         // set text on textview
-        holder.tvDisEmployeeId.setText(employeeTable.getId());
-        holder.tvDisName.setText(employeeTable.getName());
-        holder.tvDisSalary.setText(employeeTable.getSalary());
-        holder.tvDisRole.setText(employeeTable.getRole());
-        holder.tvDisCompanyName.setText(employeeTable.getCompanyName());
+        holder.tvDisEmployeeId.setText("Employee ID: "+employeeTable.getId());
+        holder.tvDisName.setText("Name: "+employeeTable.getName());
+        holder.tvDisSalary.setText("Salary: "+employeeTable.getSalary());
+        holder.tvDisRole.setText("Role: "+employeeTable.getRole());
+        holder.tvDisCompanyName.setText("Company Name: "+employeeTable.getCompanyName());
 
         holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,7 +90,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         TextView tvDisSalary;
         TextView tvDisRole;
         TextView tvDisCompanyName;
-        ImageButton btnUpdate;
+        ImageView btnUpdate;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             // Assign variables

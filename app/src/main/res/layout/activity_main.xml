@@ -14,14 +14,15 @@
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         android:layout_centerInParent="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="5dp"
+        android:layout_marginBottom="10dp"
         android:fontFamily="serif"
         android:text="Employee Details"
         android:textSize="25sp"
         android:textStyle="bold" />
 
     <ImageView
-        android:id="@+id/btnSort"
+        android:id="@+id/btnSorting"
         android:layout_width="85dp"
         android:layout_height="wrap_content"
         android:layout_alignRight="@id/tvEmployeeDetails"
@@ -32,18 +33,7 @@
         android:layout_toRightOf="@+id/tvEmployeeDetails"
         app:srcCompat="@drawable/ic_baseline_sort_24" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignRight="@+id/tvEmployeeDetails"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginRight="-30dp"
-        android:gravity="center"
-        android:layout_marginTop="40dp"
-        android:layout_toRightOf="@+id/tvEmployeeDetails"
-        android:text="Sort" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recylerList"
