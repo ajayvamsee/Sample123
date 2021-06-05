@@ -14,7 +14,7 @@
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/tvTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
@@ -23,31 +23,11 @@
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/id"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="Employee ID">
-
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/employeeID"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:maxLines="1" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/name"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="30dp"
             android:hint="Name">
 
             <com.google.android.material.textfield.TextInputEditText
@@ -70,12 +50,13 @@
             android:hint="Salary">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/employeeSalary"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/employeeSalary"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
+                android:inputType="number"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -100,15 +81,16 @@
             android:hint="Company Name">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/employeeCompanyName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="10dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
-                android:id="@+id/employeeCompanyName"
                 android:maxLines="1" />
 
         </com.google.android.material.textfield.TextInputLayout>
+
 
         <Button
             android:id="@+id/save"
@@ -117,7 +99,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="right"
             android:layout_marginLeft="10dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
             android:text="save" />
 

@@ -25,6 +25,7 @@ public class EmployeeTable implements Serializable {
     @ColumnInfo(name = "CompanyName")
     private String CompanyName;
 
+
     public int getId() {
         return id;
     }
@@ -65,4 +66,4 @@ public class EmployeeTable implements Serializable {
         CompanyName = companyName;
     }
 
-}
+   }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,6 +30,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     private Activity context;
     private EmployeeDatabase employeeDatabase;
 
+
+
     // create constructor
     public DataAdapter(Activity context,List<EmployeeTable> dataList){
         this.context=context;
@@ -46,11 +49,15 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
+
+
         // Initialize main data
         EmployeeTable employeeTable=dataList.get(position);
 
         //Initialize database
         employeeDatabase=EmployeeDatabase.getDatabase(context);
+
+
 
         // set text on textview
         holder.tvDisEmployeeId.setText("Employee ID: "+employeeTable.getId());
@@ -59,9 +66,13 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         holder.tvDisRole.setText("Role: "+employeeTable.getRole());
         holder.tvDisCompanyName.setText("Company Name: "+employeeTable.getCompanyName());
 
+
+
         holder.btnUpdate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                Toast.makeText(context, "Not implement yet to Update data", Toast.LENGTH_SHORT).show();
                 // Initialize main data when any user update data
                 // we need navigate to same employee form activity again Setback to Home screen with update data
 

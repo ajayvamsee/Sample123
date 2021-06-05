@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/ascName"
+        android:title="Ascending order by Name"/>
+    <item android:id="@+id/dscName"
+        android:title="Descending order by Name"/>
+    <item android:id="@+id/ascSalary"
+        android:title="Ascending order by Salary"/>
+    <item android:id="@+id/dscSalary"
+        android:title="Descending order by Salary"/>
+    <item android:id="@+id/reset"
+        android:title="Reset Order"/>
+
+
+</menu>

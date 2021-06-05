@@ -26,6 +26,21 @@ public interface EmployeeDao {
     @Delete
     void reset(List<EmployeeTable> dataList);
 
+    @Query("SELECT * FROM EmployeeDetails ORDER BY Name ASC")
+    List<EmployeeTable> getPersonsSortByASCName();
+
+
+    @Query("SELECT * FROM EmployeeDetails ORDER BY Name DESC")
+    List<EmployeeTable> getPersonsSortByDESCName();
+
+    @Query("SELECT * FROM EmployeeDetails ORDER BY Salary ASC")
+    List<EmployeeTable> getPersonsSortByASCSalary();
+
+
+    @Query("SELECT * FROM EmployeeDetails ORDER BY Salary DESC")
+    List<EmployeeTable> getPersonsSortByDESCSalary();
+
+
     /*
         @Query("select * from EmployeeDetails")
     LiveData<List<EmployeeTable>> getDetails();

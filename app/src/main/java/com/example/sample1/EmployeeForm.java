@@ -3,51 +3,50 @@ package com.example.sample1;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sample1.RoomDatabase.EmployeeDatabase;
 import com.example.sample1.RoomDatabase.EmployeeTable;
 import com.example.sample1.View.DataAdapter;
-import com.example.sample1.View.MainActivity;
 import com.example.sample1.ViewModel.EmployeeViewModel;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeForm extends AppCompatActivity {
+public class EmployeeForm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
-
-    // add some employee role items into string array
-    String[] employeeRoles = {"Select Role", "Jr.Android Developer ", "Android Developer", "Associate Android Developer",
-            "Mobile Application Developer", "Android Engineer", "Sr.Android Developer",
-            "Staff Software Engineer, Android", "Android Tech Lead", "Android Development Manager"};
-
-    private EmployeeViewModel employeeViewModel;
-    private Button btnSave;
-    private EmployeeDatabase employeeDatabase;
-
+    EmployeeViewModel employeeViewModel;
+    Button btnSave;
+    EmployeeDatabase employeeDatabase;
     // EdiText feilds for employee form
     TextInputEditText name;
     TextInputEditText salary;
     TextInputEditText companyName;
-
-
-    //public String role=null;
-
-    List<EmployeeTable> dataList=new ArrayList<>();
-
+    String role;
+    List<EmployeeTable> dataList = new ArrayList<>();
     DataAdapter adapter;
-
     //Adding firebase
-    FirebaseDatabase mRef;
+    DatabaseReference mReference;
+    Long maxId;
+
+    // add some employee role items into string array
+    String[] employeeRoles = {" ", "Jr.Android Developer ", "Android Developer", "Associate Android Developer",
+            "Mobile Application Developer", "Android Engineer", "Sr.Android Developer",
+            "Staff Software Engineer, Android", "Android Tech Lead", "Android Development Manager"};
 
 
     @Override
@@ -63,66 +62,53 @@ public class EmployeeForm extends AppCompatActivity {
         salary = findViewById(R.id.employeeSalary);
         companyName = findViewById(R.id.employeeCompanyName);
 
+
+        // firebase database instance
+        mReference = FirebaseDatabase.getInstance().getReference().child("EmployeeTable");
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                maxId = (snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
         // Initialize database
         employeeDatabase = EmployeeDatabase.getDatabase(this);
-        dataList=employeeDatabase.employeeDao().getAll();
-
+        dataList = employeeDatabase.employeeDao().getAll();
         // Initialize adapter
-        adapter=new DataAdapter(EmployeeForm.this,dataList);
+        adapter = new DataAdapter(EmployeeForm.this, dataList);
+        // For Role of an employee to display in spinner using Array Of some Objects
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.support_simple_spinner_dropdown_item, employeeRoles);
+        spinner.setAdapter(adapter);
+        spinner.setPrompt("Select Role");
+        spinner.setOnItemSelectedListener(this);
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // saving data to room
                 saveDataToRoomDB();
             }
         });
 
-        // For Role of an employee to display in spinner using Array Of some Objects
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, employeeRoles);
-        spinner.setAdapter(adapter);
 
-       /* spinner.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                switch (position) {
-                    case 0:
-                        role = null;
-                        break;
-                    case 1:
-                        role = employeeRoles[1];
-                        break;
-                    case 2:
-                        role = employeeRoles[2];
-                        break;
-                    case 3:
-                        role = employeeRoles[3];
-                        break;
-                    case 4:
-                        role = employeeRoles[4];
-                        break;
-                    case 5:
-                        role = employeeRoles[5];
-                        break;
-                    case 6:
-                        role = employeeRoles[6];
-                        break;
-                    case 7:
-                        role = employeeRoles[7];
-                        break;
-                    case 8:
-                        role = employeeRoles[8];
-                        break;
-                    case 9:
-                        role = employeeRoles[9];
-                        break;
+    }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+        role = parent.getItemAtPosition(position).toString();
+    }
 
-                }
-            }
-        });*/
-
+    @Override
+    public void onNothingSelected(AdapterView<?> parent) {
+        role = null;
 
     }
 
@@ -141,6 +127,8 @@ public class EmployeeForm extends AppCompatActivity {
             name.setError("Please Enter Your employeeName");
         } else if (TextUtils.isEmpty(employeeSalary)) {
             salary.setError("Please Enter Your employeeSalary");
+        } else if (TextUtils.isEmpty(role)) {
+            companyName.setError("Please Select Role");
         } else if (TextUtils.isEmpty(employeeCompanyName)) {
             companyName.setError("Please Enter Your employeeCompanyName");
         } else {
@@ -148,17 +136,22 @@ public class EmployeeForm extends AppCompatActivity {
             // passing data to EmployeeTable
             data.setName(employeeName);
             data.setSalary(employeeSalary);
-            //  data.setRole(role);
+            data.setRole(role);
             data.setCompanyName(employeeCompanyName);
 
-            // inserting text to database
+            // inserting text to room database
             employeeDatabase.employeeDao().insertDetails(data);
-            Toast.makeText(this, "Successfully Stored", Toast.LENGTH_SHORT).show();
-            //clear edit text
 
+            // inserting data to firebase
+            mReference.child(String.valueOf(maxId)).setValue(data);//need to work
+
+            Toast.makeText(this, "Successfully Stored", Toast.LENGTH_SHORT).show();
+
+            //clear edit text
             name.setText("");
             salary.setText("");
             companyName.setText("");
+
 
             //Notify when data is inserted
             dataList.clear();
@@ -166,8 +159,8 @@ public class EmployeeForm extends AppCompatActivity {
             adapter.notifyDataSetChanged();
 
 
-
         }
 
     }
+
 }
