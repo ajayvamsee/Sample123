@@ -4,11 +4,13 @@ import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import java.util.List;
 
 @Dao
 public interface EmployeeDao {
+    // Insert data
     @Insert
     void insertDetails(EmployeeTable data);
 
@@ -24,29 +26,35 @@ public interface EmployeeDao {
     @Delete
     void reset(List<EmployeeTable> dataList);
 
+    // update query
+    @Update
+    void update(EmployeeTable employeeTable);
+
+    // Query to Employee Names in Ascending order
     @Query("SELECT * FROM EmployeeDetails ORDER BY Name ASC")
     List<EmployeeTable> getPersonsSortByASCName();
 
-
+    // Query to Employee Names in Descending order
     @Query("SELECT * FROM EmployeeDetails ORDER BY Name DESC")
     List<EmployeeTable> getPersonsSortByDESCName();
 
+    // Query to Employee Salary in Ascending order
     @Query("SELECT * FROM EmployeeDetails ORDER BY Salary ASC")
     List<EmployeeTable> getPersonsSortByASCSalary();
 
-
+    // Query to Employee salary in Descending order
     @Query("SELECT * FROM EmployeeDetails ORDER BY Salary DESC")
     List<EmployeeTable> getPersonsSortByDESCSalary();
 
-
-    /*
-        @Query("select * from EmployeeDetails")
-    LiveData<List<EmployeeTable>> getDetails();
-
-       @Query("UPDATE EmployeeDetails SET text = :sText WHERE ID = sID")
-    void update(int sID,String sText);*/
-/*
     @Query("delete from EmployeeDetails")
-    void deleteAllData();*/
+    void deleteAllData();
 
 }
+    /*
+       @Query("UPDATE EmployeeDetails SET text = :sText WHERE ID = sID")
+    void update(int sID,String sText);*/
+
+
+
+
+

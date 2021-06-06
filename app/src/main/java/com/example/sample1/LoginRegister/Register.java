@@ -2,7 +2,6 @@ package com.example.sample1.LoginRegister;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -81,7 +80,7 @@ public class Register extends AppCompatActivity {
 
     // temp form validation not using right now we will this later
     // later we have to add the awesome pre-built libary to validate each and components
-    private boolean validateForm() {
+    /*private boolean validateForm() {
 
         if (TextUtils.isEmpty(etUserName.getText().toString().trim())) {
             etUserName.setError("Required.!");
@@ -111,7 +110,7 @@ public class Register extends AppCompatActivity {
         }
 
         return true;
-    }
+    }*/
 
 
     // validation of all textFeilds seperated by  methods
