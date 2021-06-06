@@ -40,7 +40,6 @@ public class Register extends AppCompatActivity {
         //Get Firebase auth instance
         mAuth = FirebaseAuth.getInstance();
 
-
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -64,8 +63,6 @@ public class Register extends AppCompatActivity {
                 public void onComplete(@NonNull Task<AuthResult> task) {
                     if (task.isSuccessful()) {
                         Toast.makeText(getApplicationContext(), "Registration successful!", Toast.LENGTH_LONG).show();
-
-
                         Intent intent = new Intent(Register.this, Login.class);
                         startActivity(intent);
                     } else {
@@ -82,9 +79,6 @@ public class Register extends AppCompatActivity {
         }
 
     }
-
-
-
     // temp form validation not using right now we will this later
     // later we have to add the awesome pre-built libary to validate each and components
         private boolean validateForm(){
@@ -127,8 +121,6 @@ public class Register extends AppCompatActivity {
 
     // validation of all textFeilds seperated by  methods
     private boolean validateName(String name) {
-
-
         if (name.isEmpty()) {
             etUserName.setError("Field cannot be empty");
             return false;
@@ -182,8 +174,4 @@ public class Register extends AppCompatActivity {
         }
 
     }
-
-
-
-
 }

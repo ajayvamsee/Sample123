@@ -66,4 +66,4 @@ public class EmployeeTable implements Serializable {
         CompanyName = companyName;
     }
 
-   }
+}

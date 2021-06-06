@@ -16,11 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sample1.EmployeeForm;
+import com.example.sample1.LoginRegister.Login;
 import com.example.sample1.R;
 import com.example.sample1.RoomDatabase.EmployeeDatabase;
 import com.example.sample1.RoomDatabase.EmployeeTable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Firebase instance;
     private FirebaseAuth mAuth;
+    private FirebaseUser user;
     static RecyclerView recyclerView;
 
     List<EmployeeTable> dataList = new ArrayList<>();
@@ -80,6 +83,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         mAuth = FirebaseAuth.getInstance();
+        user=FirebaseAuth.getInstance().getCurrentUser();
 
         recyclerView = findViewById(R.id.recylerList);
         // Initialize database
@@ -94,7 +98,6 @@ public class MainActivity extends AppCompatActivity {
         adapter = new DataAdapter(MainActivity.this, dataList);
         //set Adapter
         recyclerView.setAdapter(adapter);
-
 
 
         //sort the data by clicking sort button
@@ -124,6 +127,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         adapter.notifyDataSetChanged();
     }
 
@@ -197,7 +206,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.signOut:
                 mAuth.signOut();
                 Toast.makeText(this, "LOGOUT", Toast.LENGTH_SHORT).show();
-                // this.finish();
+                Intent intent = new Intent( MainActivity.this,Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
