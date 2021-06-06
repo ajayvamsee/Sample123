@@ -56,7 +56,7 @@ public class Register extends AppCompatActivity {
         String pass = etPass.getText().toString().trim();
         String rePass = etRepass.getText().toString().trim();
 
-        if(validateName(username) && validatePhoneNo(mobile) && validatePassword(pass) && checkPassAndRepass(pass,rePass)){
+        if (validateName(username) && validatePhoneNo(mobile) && validatePassword(pass) && checkPassAndRepass(pass, rePass)) {
             // create new user or register new User
             mAuth.createUserWithEmailAndPassword(username, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
@@ -73,50 +73,45 @@ public class Register extends AppCompatActivity {
             });
 
 
-        }
-        else {
+        } else {
             Toast.makeText(this, "check fields Properly", Toast.LENGTH_SHORT).show();
         }
 
     }
+
     // temp form validation not using right now we will this later
     // later we have to add the awesome pre-built libary to validate each and components
-        private boolean validateForm(){
+    private boolean validateForm() {
 
-            if(TextUtils.isEmpty(etUserName.getText().toString().trim())){
-                etUserName.setError("Required.!");
+        if (TextUtils.isEmpty(etUserName.getText().toString().trim())) {
+            etUserName.setError("Required.!");
+            return false;
+        } else if (TextUtils.isEmpty(etPass.getText().toString().trim())) {
+            etPass.setText("Required.!");
+            return false;
+        } else if (TextUtils.isEmpty(etMobileNum.getText().toString().trim())) {
+            etPass.setText("Required.!");
+            return false;
+        } else if (TextUtils.isEmpty(etRepass.getText().toString().trim())) {
+            etPass.setError("Required");
+            String pass = etPass.getText().toString().trim();
+            String rePass = etRepass.getText().toString().trim();
+            if (!(pass.equals(rePass))) {
+                etRepass.setText("Password Not Matched..!");
                 return false;
             }
-            else if(TextUtils.isEmpty(etPass.getText().toString().trim())){
-                etPass.setText("Required.!");
-                return false;
-            }
-            else if(TextUtils.isEmpty(etMobileNum.getText().toString().trim())){
-                etPass.setText("Required.!");
-                return false;
-            }
-            else if(TextUtils.isEmpty(etRepass.getText().toString().trim())){
-                etPass.setError("Required");
-                String pass = etPass.getText().toString().trim();
-                String rePass = etRepass.getText().toString().trim();
-                if(!(pass.equals(rePass))){
-                    etRepass.setText("Password Not Matched..!");
-                    return false;
-                }
 
-            }
-            else{
-                etUserName.setError(null);
-                etPass.setText(null);
-                etMobileNum.setText(null);
-                etRepass.setText(null);
-                return true;
+        } else {
+            etUserName.setError(null);
+            etPass.setText(null);
+            etMobileNum.setText(null);
+            etRepass.setText(null);
+            return true;
 
-            }
-
-           return true;
         }
 
+        return true;
+    }
 
 
     // validation of all textFeilds seperated by  methods
@@ -135,17 +130,16 @@ public class Register extends AppCompatActivity {
         if (phnNum.isEmpty()) { // need to implement moblie number excalty be 10 number  with condition && !(val.length()==10)
             etMobileNum.setError("Field cannot be empty");
             return false;
-        }else if (phnNum.length()!=10){
+        } else if (phnNum.length() != 10) {
             etMobileNum.setError("Enter 10 Numbers Properly");
             return false;
-        }
-        else {
+        } else {
             etMobileNum.setError(null);
             return true;
         }
     }
 
-    private boolean checkPassAndRepass(String password,String rePassword) {
+    private boolean checkPassAndRepass(String password, String rePassword) {
 
         return password.equals(rePassword);
     }

@@ -46,8 +46,7 @@ public class Login extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         //taking instance of FirebaseUser
-        user=FirebaseAuth.getInstance().getCurrentUser();
-
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
 
         progressBar.setVisibility(View.GONE);
@@ -90,14 +89,13 @@ public class Login extends AppCompatActivity {
 
     private void keepUserLogin() {
         progressBar.setVisibility(View.VISIBLE);
-        if(user!=null){
+        if (user != null) {
 
             Intent intent = new Intent(Login.this, MainActivity.class);
-            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             progressBar.setVisibility(View.GONE);
-        }
-        else {
+        } else {
             progressBar.setVisibility(View.GONE);
             Toast.makeText(this, "UserLogout", Toast.LENGTH_SHORT).show();
         }
@@ -118,7 +116,8 @@ public class Login extends AppCompatActivity {
                         Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
                         progressBar.setVisibility(View.GONE);
                         Intent intent = new Intent(Login.this, MainActivity.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                         startActivity(intent);
                     } else {
                         progressBar.setVisibility(View.GONE);

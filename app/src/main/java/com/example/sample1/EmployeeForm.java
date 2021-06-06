@@ -37,7 +37,8 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
     TextInputEditText salary;
     TextInputEditText companyName;
     String role;
-    List<EmployeeTable> dataList = new ArrayList<>();
+    static List<EmployeeTable> dataList = new ArrayList<>();
+    IUserRecyclerView mListener;
     DataAdapter adapter;
     //Adding firebase
     DatabaseReference mReference;
@@ -142,10 +143,12 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
             // inserting text to room database
             employeeDatabase.employeeDao().insertDetails(data);
 
+
             // inserting data to firebase
             mReference.child(String.valueOf(maxId)).setValue(data);//need to work
 
             Toast.makeText(this, "Successfully Stored", Toast.LENGTH_SHORT).show();
+
 
             //clear edit text
             name.setText("");
@@ -163,4 +166,7 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
 
     }
 
+    public interface IUserRecyclerView {
+        void getLatestUser(List<EmployeeTable> dataList);
+    }
 }

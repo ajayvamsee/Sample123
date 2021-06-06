@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
 
     FloatingActionButton fab;
 
-    int REQUEST_CODE=89;
+    int REQUEST_CODE = 89;
 
     // Variable to display data on list of cardView
     TextView tvDispEmployeeId;
@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
     //Firebase instance;
     private FirebaseAuth mAuth;
     private FirebaseUser user;
-    static RecyclerView recyclerView;
+    RecyclerView recyclerView;
 
     List<EmployeeTable> dataList = new ArrayList<>();
     LinearLayoutManager linearLayoutManager;
@@ -60,8 +60,6 @@ public class MainActivity extends AppCompatActivity {
     // To calculate to number of employee details try to enter the form
     // we need to set for one user 10 employee has to data entry
     int count = 0;
-
-
 
 
     @Override
@@ -79,11 +77,11 @@ public class MainActivity extends AppCompatActivity {
         btnSort = findViewById(R.id.btnSorting);
 
         //database reference instance
-        mReference= FirebaseDatabase.getInstance().getReference();//need to update
+        mReference = FirebaseDatabase.getInstance().getReference();//need to update
 
 
         mAuth = FirebaseAuth.getInstance();
-        user=FirebaseAuth.getInstance().getCurrentUser();
+        user = FirebaseAuth.getInstance().getCurrentUser();
 
         recyclerView = findViewById(R.id.recylerList);
         // Initialize database
@@ -113,7 +111,6 @@ public class MainActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                count++;
                 // calling activity to fill form in employers data in EmployeeForm activity
                 Intent intent = new Intent(MainActivity.this, EmployeeForm.class);
                 startActivity(intent);
@@ -123,6 +120,7 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
+
 
     @Override
     protected void onResume() {
@@ -149,13 +147,13 @@ public class MainActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
                     case R.id.ascName:
                         // add a feature to sort the data
-                       dataList= employeeDatabase.employeeDao().getPersonsSortByASCName();
+                        dataList = employeeDatabase.employeeDao().getPersonsSortByASCName();
                         adapter = new DataAdapter(MainActivity.this, dataList);
                         recyclerView.setAdapter(adapter);
                         break;
                     case R.id.dscName:
                         // add a feature to sort the data
-                        dataList=employeeDatabase.employeeDao().getPersonsSortByDESCName();
+                        dataList = employeeDatabase.employeeDao().getPersonsSortByDESCName();
                         adapter = new DataAdapter(MainActivity.this, dataList);
                         recyclerView.setAdapter(adapter);
                         break;
@@ -170,7 +168,7 @@ public class MainActivity extends AppCompatActivity {
                         dataList = employeeDatabase.employeeDao().getPersonsSortByDESCSalary();
                         adapter = new DataAdapter(MainActivity.this, dataList);
                         recyclerView.setAdapter(adapter);
-                       // Toast.makeText(MainActivity.this, "Ascending Sort not implement yet", Toast.LENGTH_SHORT).show();
+                        // Toast.makeText(MainActivity.this, "Ascending Sort not implement yet", Toast.LENGTH_SHORT).show();
                         break;
                     case R.id.reset:
                         dataList = employeeDatabase.employeeDao().getAll();
@@ -206,11 +204,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.signOut:
                 mAuth.signOut();
                 Toast.makeText(this, "LOGOUT", Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent( MainActivity.this,Login.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK| Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                Intent intent = new Intent(MainActivity.this, Login.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(intent);
                 break;
         }
         return super.onOptionsItemSelected(item);
     }
+
+
 }
