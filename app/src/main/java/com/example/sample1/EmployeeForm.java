@@ -1,7 +1,11 @@
 package com.example.sample1;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -15,6 +19,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sample1.RoomDatabase.EmployeeDatabase;
 import com.example.sample1.RoomDatabase.EmployeeTable;
 import com.example.sample1.View.DataAdapter;
+import com.example.sample1.View.MainActivity;
 import com.example.sample1.ViewModel.EmployeeViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -29,17 +34,19 @@ import java.util.List;
 public class EmployeeForm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
     Spinner spinner;
-    EmployeeViewModel employeeViewModel;
     Button btnSave;
+    EmployeeViewModel employeeViewModel;
     EmployeeDatabase employeeDatabase;
     // EdiText feilds for employee form
     TextInputEditText name;
     TextInputEditText salary;
     TextInputEditText companyName;
     String role;
-    static List<EmployeeTable> dataList = new ArrayList<>();
+    List<EmployeeTable> dataList;
     IUserRecyclerView mListener;
+
     DataAdapter adapter;
+    MainActivity context;
     //Adding firebase
     DatabaseReference mReference;
     Long maxId;
@@ -48,6 +55,7 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
     String[] employeeRoles = {" ", "Jr.Android Developer ", "Android Developer", "Associate Android Developer",
             "Mobile Application Developer", "Android Engineer", "Sr.Android Developer",
             "Staff Software Engineer, Android", "Android Tech Lead", "Android Development Manager"};
+
 
 
     @Override
@@ -62,6 +70,9 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
         name = findViewById(R.id.employeeName);
         salary = findViewById(R.id.employeeSalary);
         companyName = findViewById(R.id.employeeCompanyName);
+        dataList = new ArrayList<>();
+
+
 
 
         // firebase database instance
@@ -143,6 +154,14 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
             // inserting text to room database
             employeeDatabase.employeeDao().insertDetails(data);
 
+            Intent intent=new Intent();
+
+            setResult(RESULT_OK);
+
+            //need to work
+            //mListener.getLatestUser(dataList);
+
+
 
             // inserting data to firebase
             mReference.child(String.valueOf(maxId)).setValue(data);//need to work
@@ -167,6 +186,6 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public interface IUserRecyclerView {
-        void getLatestUser(List<EmployeeTable> dataList);
+        void getLatestUser(List<EmployeeTable> tableList);
     }
 }

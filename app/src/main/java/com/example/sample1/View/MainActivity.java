@@ -1,5 +1,7 @@
+
 package com.example.sample1.View;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,6 +13,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -29,7 +33,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements EmployeeForm.IUserRecyclerView{
 
     FloatingActionButton fab;
 
@@ -53,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
     LinearLayoutManager linearLayoutManager;
     EmployeeDatabase employeeDatabase;
     DataAdapter adapter;
+    EmployeeForm.IUserRecyclerView mUpdate;
 
     //Firebase database reference
     DatabaseReference mReference;
@@ -66,6 +71,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mUpdate=this;
 
         fab = findViewById(R.id.fab);
 
@@ -113,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // calling activity to fill form in employers data in EmployeeForm activity
                 Intent intent = new Intent(MainActivity.this, EmployeeForm.class);
-                startActivity(intent);
+                startActivityForResult(intent,REQUEST_CODE);
 
             }
         });
@@ -213,4 +219,20 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    @Override
+    public void getLatestUser(List<EmployeeTable> tableList) {
+        adapter = new DataAdapter(MainActivity.this, tableList);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode==REQUEST_CODE){
+
+            adapter.notifyDataSetChanged();
+
+        }
+    }
 }

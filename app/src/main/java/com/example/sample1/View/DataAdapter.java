@@ -101,7 +101,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             tvDisSalary = itemView.findViewById(R.id.tvDisSalary);
             tvDisRole = itemView.findViewById(R.id.tvDisRole);
             tvDisCompanyName = itemView.findViewById(R.id.tvDisCompanyName);
-            btnUpdate = itemView.findViewById(R.id.btnUpdate);
+            btnUpdate = itemView.findViewById(R.id.btnEdit);
         }
     }
 }

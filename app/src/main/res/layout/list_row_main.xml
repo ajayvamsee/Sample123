@@ -63,7 +63,7 @@
 
 
         <ImageView
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnEdit"
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_marginStart="18dp"
