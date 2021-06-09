@@ -1,11 +1,8 @@
 package com.example.sample1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -19,7 +16,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.sample1.RoomDatabase.EmployeeDatabase;
 import com.example.sample1.RoomDatabase.EmployeeTable;
 import com.example.sample1.View.DataAdapter;
-import com.example.sample1.View.MainActivity;
 import com.example.sample1.ViewModel.EmployeeViewModel;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -46,7 +42,7 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
     IUserRecyclerView mListener;
 
     DataAdapter adapter;
-    MainActivity context;
+
     //Adding firebase
     DatabaseReference mReference;
     Long maxId;
@@ -56,6 +52,7 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
             "Mobile Application Developer", "Android Engineer", "Sr.Android Developer",
             "Staff Software Engineer, Android", "Android Tech Lead", "Android Development Manager"};
 
+    
 
 
     @Override
@@ -65,15 +62,23 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
 
         spinner = findViewById(R.id.role);
         btnSave = findViewById(R.id.save);
-
-
         name = findViewById(R.id.employeeName);
         salary = findViewById(R.id.employeeSalary);
         companyName = findViewById(R.id.employeeCompanyName);
         dataList = new ArrayList<>();
 
 
-
+        // Initialize database
+        employeeDatabase = EmployeeDatabase.getDatabase(this);
+        dataList = employeeDatabase.employeeDao().getAll();
+        // Initialize adapter
+        adapter = new DataAdapter(EmployeeForm.this, dataList);
+        // For Role of an employee to display in spinner using Array Of some Objects
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.support_simple_spinner_dropdown_item, employeeRoles);
+        spinner.setAdapter(adapter);
+        spinner.setPrompt("Select Role");
+        spinner.setOnItemSelectedListener(this);
 
         // firebase database instance
         mReference = FirebaseDatabase.getInstance().getReference().child("EmployeeTable");
@@ -88,18 +93,6 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
 
             }
         });
-
-        // Initialize database
-        employeeDatabase = EmployeeDatabase.getDatabase(this);
-        dataList = employeeDatabase.employeeDao().getAll();
-        // Initialize adapter
-        adapter = new DataAdapter(EmployeeForm.this, dataList);
-        // For Role of an employee to display in spinner using Array Of some Objects
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, employeeRoles);
-        spinner.setAdapter(adapter);
-        spinner.setPrompt("Select Role");
-        spinner.setOnItemSelectedListener(this);
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -117,7 +110,6 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         role = parent.getItemAtPosition(position).toString();
     }
-
     @Override
     public void onNothingSelected(AdapterView<?> parent) {
         role = null;
@@ -154,13 +146,8 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
             // inserting text to room database
             employeeDatabase.employeeDao().insertDetails(data);
 
-            Intent intent=new Intent();
-
-            setResult(RESULT_OK);
-
             //need to work
-            //mListener.getLatestUser(dataList);
-
+           // mListener.getLatestUser(dataList);
 
 
             // inserting data to firebase

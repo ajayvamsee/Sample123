@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     app:cardCornerRadius="10dp"
     app:cardElevation="10dp"
-    android:layout_margin="5dp">
+    android:layout_margin="3dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -24,6 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Employee ID"
+                android:fontFamily="serif"
                 android:textSize="24sp" />
 
             <TextView
@@ -32,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Name"
+                android:fontFamily="serif"
                 android:textSize="18sp" />
 
             <TextView
@@ -39,8 +41,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:fontFamily="serif"
                 android:text="Salary"
-                android:textSize="14sp" />
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tvDisRole"
@@ -48,6 +51,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Role"
+                android:fontFamily="serif"
                 android:textSize="18sp" />
 
             <TextView
@@ -56,6 +60,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Company Name"
+                android:fontFamily="serif"
                 android:textSize="18sp" />
 
         </LinearLayout>

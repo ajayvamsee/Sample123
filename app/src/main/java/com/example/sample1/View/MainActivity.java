@@ -1,7 +1,7 @@
-
 package com.example.sample1.View;
 
-import android.app.Activity;
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -14,7 +14,6 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -33,7 +32,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity implements EmployeeForm.IUserRecyclerView{
+public class MainActivity extends AppCompatActivity implements EmployeeForm.IUserRecyclerView {
 
     FloatingActionButton fab;
 
@@ -71,7 +70,8 @@ public class MainActivity extends AppCompatActivity implements EmployeeForm.IUse
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        mUpdate=this;
+
+
 
         fab = findViewById(R.id.fab);
 
@@ -113,13 +113,12 @@ public class MainActivity extends AppCompatActivity implements EmployeeForm.IUse
         });
 
         // A floating button used to add employee data to database
-        // it will redirect into new Activity to store data
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 // calling activity to fill form in employers data in EmployeeForm activity
                 Intent intent = new Intent(MainActivity.this, EmployeeForm.class);
-                startActivityForResult(intent,REQUEST_CODE);
+                startActivityForResult(intent, REQUEST_CODE);
 
             }
         });
@@ -148,6 +147,7 @@ public class MainActivity extends AppCompatActivity implements EmployeeForm.IUse
         popupMenu.getMenuInflater().inflate(R.menu.popup_menu, popupMenu.getMenu());
         // menu item click listener
         popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+            @SuppressLint("NonConstantResourceId")
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 switch (item.getItemId()) {
@@ -197,6 +197,7 @@ public class MainActivity extends AppCompatActivity implements EmployeeForm.IUse
         return true;
     }
 
+    @SuppressLint("NonConstantResourceId")
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()) {
@@ -221,18 +222,11 @@ public class MainActivity extends AppCompatActivity implements EmployeeForm.IUse
 
     @Override
     public void getLatestUser(List<EmployeeTable> tableList) {
-        adapter = new DataAdapter(MainActivity.this, tableList);
+
+        adapter = new DataAdapter(MainActivity.this,tableList);
         recyclerView.setAdapter(adapter);
 
+
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode==REQUEST_CODE){
-
-            adapter.notifyDataSetChanged();
-
-        }
-    }
 }
