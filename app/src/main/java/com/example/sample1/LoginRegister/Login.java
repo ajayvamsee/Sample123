@@ -9,14 +9,10 @@ import android.widget.EditText;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.sample1.R;
 import com.example.sample1.View.MainActivity;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
@@ -52,29 +48,23 @@ public class Login extends AppCompatActivity {
         progressBar.setVisibility(View.GONE);
 
         // for login user by clicking the login button in UI
-        btnLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnLogin.setOnClickListener(v -> {
 
-                progressBar.setVisibility(View.VISIBLE);
+            progressBar.setVisibility(View.VISIBLE);
 
-                loginUser();
+            loginUser();
 
-            }
         });
 
         // for user registration by clicking the signUp button in UI
-        btnSignUp.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        btnSignUp.setOnClickListener(v -> {
 
-                progressBar.setVisibility(View.GONE);
+            progressBar.setVisibility(View.GONE);
 
-                // navigate into register page to register user
-                Intent intent = new Intent(Login.this, Register.class);
-                startActivity(intent);
+            // navigate into register page to register user
+            Intent intent = new Intent(Login.this, Register.class);
+            startActivity(intent);
 
-            }
         });
 
 
@@ -109,23 +99,20 @@ public class Login extends AppCompatActivity {
 
         if (checkUserName(email) || checkPassword(password)) {
             // sign in existing user
-            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                @Override
-                public void onComplete(@NonNull Task<AuthResult> task) {
-                    if (task.isSuccessful()) {
-                        Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
-                        progressBar.setVisibility(View.GONE);
-                        Intent intent = new Intent(Login.this, MainActivity.class);
+            mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(task -> {
+                if (task.isSuccessful()) {
+                    Toast.makeText(getApplicationContext(), "Login successful!!", Toast.LENGTH_LONG).show();
+                    progressBar.setVisibility(View.GONE);
+                    Intent intent = new Intent(Login.this, MainActivity.class);
 
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                        startActivity(intent);
-                    } else {
-                        progressBar.setVisibility(View.GONE);
-                        // sign-in failed
-                        Toast.makeText(getApplicationContext(), "Login failed!!", Toast.LENGTH_LONG).show();
-                    }
-
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                } else {
+                    progressBar.setVisibility(View.GONE);
+                    // sign-in failed
+                    Toast.makeText(getApplicationContext(), "Login failed!!", Toast.LENGTH_LONG).show();
                 }
+
             });
 
 
@@ -151,7 +138,7 @@ public class Login extends AppCompatActivity {
             etPassword.setError("Enter password");
             return false;
         } else if (password.length() < 6 || password.length() > 10) {
-            etPassword.setError("Passowrd should be between 6 to 10 characters");
+            etPassword.setError("Password should be between 6 to 10 characters");
             return false;
         }
         return true;

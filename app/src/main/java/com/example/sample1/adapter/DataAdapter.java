@@ -1,5 +1,6 @@
-package com.example.sample1.View;
+package com.example.sample1.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,17 +14,17 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.sample1.R;
 import com.example.sample1.RoomDatabase.EmployeeDatabase;
-import com.example.sample1.RoomDatabase.EmployeeTable;
+import com.example.sample1.model.EmployeeTable;
 
 import java.util.List;
 
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
-    // Initilize variables
-    private List<EmployeeTable> dataList;
-    private Activity context;
-    private EmployeeDatabase employeeDatabase;
+    // Initialize variables
+    private final List<EmployeeTable> dataList;
+    private final Activity context;
+    public EmployeeDatabase employeeDatabase;
 
     // create constructor
     public DataAdapter(Activity context, List<EmployeeTable> dataList) {
@@ -40,13 +41,12 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 
-
         // Initialize main data
         EmployeeTable employeeTable = dataList.get(position);
-
         //Initialize database
         employeeDatabase = EmployeeDatabase.getDatabase(context);
 
@@ -83,7 +83,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         return dataList.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public static class ViewHolder extends RecyclerView.ViewHolder {
 
         //Initialize variables
         TextView tvDisEmployeeId;
@@ -95,6 +95,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
+
             // Assign variables
             tvDisEmployeeId = itemView.findViewById(R.id.tvDisEmployeeId);
             tvDisName = itemView.findViewById(R.id.tvDisName);

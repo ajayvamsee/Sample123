@@ -7,7 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import com.example.sample1.RoomDatabase.EmployeeDao;
 import com.example.sample1.RoomDatabase.EmployeeDatabase;
-import com.example.sample1.RoomDatabase.EmployeeTable;
+import com.example.sample1.model.EmployeeTable;
 
 import java.util.List;
 
@@ -16,14 +16,15 @@ public class EmployeeRepository {
 
     private LiveData<List<EmployeeTable>> allData;
 
-    public EmployeeRepository(Application application){
-        EmployeeDatabase db=EmployeeDatabase.getDatabase(application);
-        employeeDao=db.employeeDao();
+    public EmployeeRepository(Application application) {
+        EmployeeDatabase db = EmployeeDatabase.getDatabase(application);
+        employeeDao = db.employeeDao();
 
     }
-   /* public void deleteData() {
+
+    public void deleteData() {
         employeeDao.deleteAllData();
-    }*/
+    }
 
     public LiveData<List<EmployeeTable>> getAllData() {
         return allData;
@@ -40,10 +41,11 @@ public class EmployeeRepository {
         }
         @Override
         protected Void doInBackground(EmployeeTable... employeeTables) {
-           // employeeDao.deleteAllData();
+            employeeDao.deleteAllData();
             employeeDao.insertDetails(employeeTables[0]);
             return null;
         }
+
     }
 
 }

@@ -6,6 +6,8 @@ import androidx.room.Insert;
 import androidx.room.Query;
 import androidx.room.Update;
 
+import com.example.sample1.model.EmployeeTable;
+
 import java.util.List;
 
 @Dao
@@ -18,7 +20,7 @@ public interface EmployeeDao {
     @Query("SELECT * FROM EMPLOYEEDETAILS")
     List<EmployeeTable> getAll();
 
-    // Delete Query
+    // Delete by specified row or column Query
     @Delete
     void delete(EmployeeTable data);
 

@@ -6,6 +6,8 @@ import androidx.room.Database;
 import androidx.room.Room;
 import androidx.room.RoomDatabase;
 
+import com.example.sample1.model.EmployeeTable;
+
 @Database(entities = EmployeeTable.class, version = 1, exportSchema = false)
 public abstract class EmployeeDatabase extends RoomDatabase {
 

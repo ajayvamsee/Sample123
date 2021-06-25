@@ -7,7 +7,7 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 
 import com.example.sample1.Repository.EmployeeRepository;
-import com.example.sample1.RoomDatabase.EmployeeTable;
+import com.example.sample1.model.EmployeeTable;
 
 import java.util.List;
 
@@ -26,6 +26,14 @@ public class EmployeeViewModel extends AndroidViewModel {
 
     public void insert(EmployeeTable data) {
         repository.insertData(data);
+    }
+
+    public void updates(EmployeeTable data) {
+        repository.insertData(data);
+    }
+
+    public void delete() {
+        repository.deleteData();
     }
 
     public LiveData<List<EmployeeTable>> getGetAllData() {
