@@ -22,15 +22,15 @@
             android:layout_height="wrap_content"
             android:fontFamily="serif"
             android:gravity="center"
-            android:text="User Registration"
-            android:textSize="20dp" />
+            android:text="@string/user_registration"
+            android:textSize="20sp" />
 
         <TextView
             android:id="@+id/tv2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="50dp"
-            android:text="User Name *"
+            android:text="@string/user_name"
              />
 
         <EditText
@@ -38,14 +38,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="User Email Name"
+            android:hint="@string/user_email_name"
             android:inputType="textEmailAddress" />
 
         <TextView
             android:id="@+id/tv4"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mobile *"
+            android:text="@string/mobile"
              />
 
         <EditText
@@ -54,7 +54,7 @@
             android:layout_height="wrap_content"
             android:ems="10"
             android:maxLength="10"
-            android:hint="Mobile Number"
+            android:hint="@string/mobile_number"
             android:inputType="number"
 
             />
@@ -63,7 +63,7 @@
             android:id="@+id/tv5"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Password *"
+            android:text="@string/pass1"
              />
 
         <EditText
@@ -78,7 +78,7 @@
             android:id="@+id/tv6"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Confirm Password *"
+            android:text="@string/confirm_password"
             />
 
         <EditText
@@ -86,7 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Confirm Password "
+            android:hint="@string/confirm_password"
             android:inputType="textPassword" />
 
 
@@ -95,7 +95,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Sign Up"
+            android:text="@string/sign_up"
             android:textColor="@color/white"
             app:backgroundTint="#024C4C" />
 
@@ -111,14 +111,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
-                android:text="Already a Member ? Click " />
+                android:text="@string/already_a_member_click" />
 
             <TextView
                 android:id="@+id/tvLogin"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
-                android:text="here"
+                android:text="@string/here"
                 android:textColor="#1E88E5"
                 android:textStyle="bold" />
 
@@ -127,7 +127,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="7dp"
-                android:text="to Login "
+                android:text="@string/to_login"
                 tools:ignore="DuplicateIds" />
         </LinearLayout>
 

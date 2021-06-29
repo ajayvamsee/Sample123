@@ -8,7 +8,7 @@ import androidx.room.RoomDatabase;
 
 import com.example.sample1.model.EmployeeTable;
 
-@Database(entities = EmployeeTable.class, version = 1, exportSchema = false)
+@Database(entities = EmployeeTable.class, version = 2, exportSchema = false)
 public abstract class EmployeeDatabase extends RoomDatabase {
 
     public abstract EmployeeDao employeeDao();

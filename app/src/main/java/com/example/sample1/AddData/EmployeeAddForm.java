@@ -1,10 +1,9 @@
-package com.example.sample1.HomePage;
+package com.example.sample1.AddData;
 
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -14,8 +13,11 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.sample1.R;
+import com.example.sample1.Repository.EmployeeRepository;
 import com.example.sample1.RoomDatabase.EmployeeDatabase;
 import com.example.sample1.ViewModel.EmployeeViewModel;
 import com.example.sample1.adapter.DataAdapter;
@@ -30,7 +32,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeForm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EmployeeAddForm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
 
 
     TextInputEditText name;
@@ -46,10 +48,12 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
     String employeeCompanyName;
 
     List<EmployeeTable> dataList;
+    LiveData<EmployeeTable> dataList2;
     DataAdapter adapter;
 
     EmployeeViewModel employeeViewModel;
     EmployeeDatabase employeeDatabase;
+    EmployeeRepository employeeRepository;
 
     //Adding firebase
     DatabaseReference mReference;
@@ -71,40 +75,17 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
         companyName = findViewById(R.id.employeeCompanyName);
         spinner = findViewById(R.id.role);
         btnSave = findViewById(R.id.save);
-
         dataList = new ArrayList<>();
 
+        employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
 
-        // firebase database instance
-        mReference = FirebaseDatabase.getInstance().getReference().child("EmployeeTable");
-        mReference.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                maxId = (snapshot.getChildrenCount());
-            }
+        fbInstance();
 
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
+        dbInitialize();
 
-            }
-        });
+        adapterSetUp();
 
-
-        // Initialize database
-        employeeDatabase = EmployeeDatabase.getDatabase(this);
-        dataList = employeeDatabase.employeeDao().getAll();
-
-
-        // Initialize adapter
-        adapter = new DataAdapter(EmployeeForm.this, dataList);
-
-
-        // For Role of an employee to display in spinner using Array Of some Objects
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, employeeRoles);
-        spinner.setAdapter(adapter);
-        spinner.setPrompt("Select Role");
-        spinner.setOnItemSelectedListener(this);
+        arrayAdapterSetUp();
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -121,6 +102,42 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
         });
 
 
+    }
+
+    private void arrayAdapterSetUp() {
+        // For Role of an employee to display in spinner using Array Of some Objects
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                R.layout.support_simple_spinner_dropdown_item, employeeRoles);
+        spinner.setAdapter(adapter);
+        spinner.setPrompt("Select Role");
+        spinner.setOnItemSelectedListener(this);
+    }
+
+    private void adapterSetUp() {
+        // Initialize adapter
+        adapter = new DataAdapter(EmployeeAddForm.this, dataList);
+    }
+
+    private void dbInitialize() {
+        // Initialize database
+        employeeDatabase = EmployeeDatabase.getDatabase(this);
+        dataList = employeeDatabase.employeeDao().getAll();
+    }
+
+    private void fbInstance() {
+        // firebase database instance
+        mReference = FirebaseDatabase.getInstance().getReference().child("EmployeeTable");
+        mReference.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                maxId = (snapshot.getChildrenCount());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -164,14 +181,8 @@ public class EmployeeForm extends AppCompatActivity implements AdapterView.OnIte
             employeeTable.setRole(role);
             employeeTable.setCompanyName(employeeCompanyName);
 
-
-            // inserting text to room database
-            employeeDatabase.employeeDao().insertDetails(employeeTable);
-
             // inserting data to firebase
             mReference.child(String.valueOf(maxId)).setValue(employeeTable);
-
-
             Toast.makeText(this, "Successfully Stored", Toast.LENGTH_SHORT).show();
 
 

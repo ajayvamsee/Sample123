@@ -20,6 +20,7 @@ public class EmployeeRepository {
         EmployeeDatabase db = EmployeeDatabase.getDatabase(application);
         employeeDao = db.employeeDao();
 
+
     }
 
     public void deleteData() {
@@ -30,15 +31,29 @@ public class EmployeeRepository {
         return allData;
     }
 
+    // to insert data
     public void insertData(EmployeeTable data) {
-       new LoginInsertion(employeeDao).execute(data);
+        new LoginInsertion(employeeDao).execute(data);
     }
-    private static class LoginInsertion extends AsyncTask<EmployeeTable,Void,Void>{
+
+    // to delete data
+    public void deleteData(EmployeeTable data) {
+        new DeleteAsyncTask(employeeDao).execute(data);
+    }
+
+    // to update data
+    public void updateData(EmployeeTable data) {
+        new UpdateAsyncTask(employeeDao).execute(data);
+    }
+
+    private static class LoginInsertion extends AsyncTask<EmployeeTable, Void, Void> {
 
         private EmployeeDao employeeDao;
-        private LoginInsertion(EmployeeDao employeeDao){
-            this.employeeDao=employeeDao;
+
+        private LoginInsertion(EmployeeDao employeeDao) {
+            this.employeeDao = employeeDao;
         }
+
         @Override
         protected Void doInBackground(EmployeeTable... employeeTables) {
             employeeDao.deleteAllData();
@@ -48,5 +63,34 @@ public class EmployeeRepository {
 
     }
 
+    private class DeleteAsyncTask extends AsyncTask<EmployeeTable, Void, Void> {
+
+        private EmployeeDao employeeDao;
+
+        public DeleteAsyncTask(EmployeeDao employeeDao) {
+            this.employeeDao = employeeDao;
+        }
+
+        @Override
+        protected Void doInBackground(EmployeeTable... employeeTables) {
+            employeeDao.delete(employeeTables[0]);
+            return null;
+        }
+    }
+
+    private class UpdateAsyncTask extends AsyncTask<EmployeeTable, Void, Void> {
+
+        private EmployeeDao employeeDao;
+
+        public UpdateAsyncTask(EmployeeDao employeeDao) {
+            this.employeeDao = employeeDao;
+        }
+
+        @Override
+        protected Void doInBackground(EmployeeTable... employeeTables) {
+            employeeDao.update(employeeTables[0]);
+            return null;
+        }
+    }
 }
 

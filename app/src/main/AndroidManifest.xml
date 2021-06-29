@@ -11,14 +11,14 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Sample1">
-        <activity android:name=".HomePage.EmployeeForm">
+        <activity android:name=".AddData.EmployeeAddForm">
 
         </activity>
         <activity android:name=".LoginRegister.Register" />
         <activity android:name=".LoginRegister.Login">
 
         </activity>
-        <activity android:name=".View.MainActivity">
+        <activity android:name=".HomePage.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

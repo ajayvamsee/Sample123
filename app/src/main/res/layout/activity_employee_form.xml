@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".HomePage.EmployeeForm">
+    tools:context=".AddData.EmployeeAddForm">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -19,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="serif"
-            android:text="Employee Details Form"
+            android:text="@string/employee_details_form"
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -28,7 +28,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
-            android:hint="Name">
+            android:hint="@string/name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/employeeName"
@@ -47,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:hint="Salary">
+            android:hint="@string/salary">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/employeeSalary"
@@ -78,7 +78,7 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Company Name">
+            android:hint="@string/company_name">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/employeeCompanyName"
@@ -101,7 +101,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginTop="10dp"
             android:layout_marginRight="10dp"
-            android:text="save" />
+            android:text="@string/save" />
 
 
     </LinearLayout>

@@ -18,8 +18,6 @@ public class EmployeeViewModel extends AndroidViewModel {
 
     public EmployeeViewModel(@NonNull Application application) {
         super(application);
-
-
         repository = new EmployeeRepository(application);
         getAllData = repository.getAllData();
     }
@@ -29,11 +27,11 @@ public class EmployeeViewModel extends AndroidViewModel {
     }
 
     public void updates(EmployeeTable data) {
-        repository.insertData(data);
+        repository.updateData(data);
     }
 
-    public void delete() {
-        repository.deleteData();
+    public void deleteData(EmployeeTable data) {
+        repository.deleteData(data);
     }
 
     public LiveData<List<EmployeeTable>> getGetAllData() {

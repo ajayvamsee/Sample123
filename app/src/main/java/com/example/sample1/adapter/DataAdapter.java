@@ -22,23 +22,21 @@ import java.util.List;
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
 
     // Initialize variables
-    private final List<EmployeeTable> dataList;
-    private final Activity context;
+    public List<EmployeeTable> dataList;
+    public Activity context;
+    public OnDeleteClickListener onDeleteClickListener;
     public EmployeeDatabase employeeDatabase;
+
+    public DataAdapter(Activity context, List<EmployeeTable> dataList, OnDeleteClickListener onDeleteClickListener) {
+        this.context = context;
+        this.dataList = dataList;
+        this.onDeleteClickListener = onDeleteClickListener;
+    }
 
     // create constructor
     public DataAdapter(Activity context, List<EmployeeTable> dataList) {
         this.context = context;
         this.dataList = dataList;
-        notifyDataSetChanged();
-    }
-
-    @NonNull
-    @Override
-    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // Initialize view
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row_main, parent, false);
-        return new ViewHolder(view);
     }
 
     @SuppressLint("SetTextI18n")
@@ -66,16 +64,38 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
                 Toast.makeText(context, "Not implement yet to Update data", Toast.LENGTH_SHORT).show();
                 // Initialize main data when any user update data
                 // we need navigate to same employee form activity again Setback to Home screen with update data
-
-
                /* employeeDatabase.employeeDao().update();
                 dataList.clear();
                 dataList.addAll(employeeDatabase.employeeDao().getAll());
                 notifyDataSetChanged();*/
+
+            }
+        });
+
+        holder.btnDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (onDeleteClickListener != null) {
+                    onDeleteClickListener.onDeleteClickListener(dataList.get(position), position);
+                }
+
+                Toast.makeText(context, "Deleted", Toast.LENGTH_SHORT).show();
             }
         });
 
 
+    }
+
+    @NonNull
+    @Override
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        // Initialize view
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.list_row_main, parent, false);
+        return new ViewHolder(view);
+    }
+
+    public interface OnDeleteClickListener {
+        void onDeleteClickListener(EmployeeTable employeeTable, int position);
     }
 
     @Override
@@ -92,6 +112,7 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         TextView tvDisRole;
         TextView tvDisCompanyName;
         ImageView btnUpdate;
+        ImageView btnDelete;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -103,6 +124,8 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             tvDisRole = itemView.findViewById(R.id.tvDisRole);
             tvDisCompanyName = itemView.findViewById(R.id.tvDisCompanyName);
             btnUpdate = itemView.findViewById(R.id.btnEdit);
+            btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
+
 }
