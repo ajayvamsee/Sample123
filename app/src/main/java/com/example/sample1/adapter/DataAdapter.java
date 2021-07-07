@@ -94,9 +94,14 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
         return new ViewHolder(view);
     }
 
+    // interface to send data to EmployeeAddForm activity
     public interface OnDeleteClickListener {
         void onDeleteClickListener(EmployeeTable employeeTable, int position);
     }
+    /*// interface to send data to EmployeeUpdateForm activity
+    public interface OnUpdateClickListener{
+        void onUpdateData(EmployeeTable employeeTable, int position);
+    }*/
 
     @Override
     public int getItemCount() {
@@ -127,5 +132,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.ViewHolder> {
             btnDelete = itemView.findViewById(R.id.btnDelete);
         }
     }
+
 
 }

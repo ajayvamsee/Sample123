@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".AddData.EmployeeAddForm">
 
     <LinearLayout
@@ -20,7 +19,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:fontFamily="serif"
-            android:text="@string/employee_details_form"
+            android:text="@string/employee_update_form"
             android:textSize="20sp" />
 
         <com.google.android.material.textfield.TextInputLayout
@@ -62,24 +61,16 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/roleMenu"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        <Spinner
+            android:id="@+id/role"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:hint="Select Role"
-            tools:ignore="MissingConstraints">
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginBottom="10dp">
 
-            <AutoCompleteTextView
-                android:id="@+id/autoCompleteTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginRight="10dp"
-                android:inputType="none" />
-        </com.google.android.material.textfield.TextInputLayout>
+        </Spinner>
 
 
         <com.google.android.material.textfield.TextInputLayout
@@ -87,7 +78,6 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
             android:hint="@string/company_name">
 
             <com.google.android.material.textfield.TextInputEditText

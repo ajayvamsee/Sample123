@@ -26,4 +26,17 @@
     <string name="already_a_member_click">Already a Member ? Click</string>
     <string name="here">here</string>
     <string name="to_login">to Login</string>
+    <string name="employee_update_form">Employee Update Form</string>
+
+    <string-array name="roles">
+        <item>Jr.Android Developer</item>
+        <item>Associate Android Developer</item>
+        <item>Jr.Android Developer</item>
+        <item>Mobile Application Developer</item>
+        <item>Android Engineer</item>
+        <item>Sr.Android Developer</item>
+        <item>Staff Software Engineer Android</item>
+        <item>Senior Staff Software Engineer Android</item>
+        <item>Android Tech Lead</item>
+    </string-array>
 </resources>

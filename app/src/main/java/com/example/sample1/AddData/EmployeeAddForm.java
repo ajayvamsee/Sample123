@@ -7,6 +7,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -23,6 +24,7 @@ import com.example.sample1.ViewModel.EmployeeViewModel;
 import com.example.sample1.adapter.DataAdapter;
 import com.example.sample1.model.EmployeeTable;
 import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -32,15 +34,17 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeAddForm extends AppCompatActivity implements AdapterView.OnItemSelectedListener {
+public class EmployeeAddForm extends AppCompatActivity {
 
 
     TextInputEditText name;
     TextInputEditText salary;
     TextInputEditText companyName;
-
-    Spinner spinner;
     Button btnSave;
+
+    public ArrayAdapter arrayAdapter;
+    private TextInputLayout textInputLayout;
+    private AutoCompleteTextView autoCompleteTextView;
 
     String employeeName;
     String employeeSalary;
@@ -48,7 +52,6 @@ public class EmployeeAddForm extends AppCompatActivity implements AdapterView.On
     String employeeCompanyName;
 
     List<EmployeeTable> dataList;
-    LiveData<EmployeeTable> dataList2;
     DataAdapter adapter;
 
     EmployeeViewModel employeeViewModel;
@@ -64,7 +67,6 @@ public class EmployeeAddForm extends AppCompatActivity implements AdapterView.On
             "Mobile Application Developer", "Android Engineer", "Sr.Android Developer",
             "Staff Software Engineer, Android", "Android Tech Lead", "Android Development Manager"};
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,8 +75,9 @@ public class EmployeeAddForm extends AppCompatActivity implements AdapterView.On
         name = findViewById(R.id.employeeName);
         salary = findViewById(R.id.employeeSalary);
         companyName = findViewById(R.id.employeeCompanyName);
-        spinner = findViewById(R.id.role);
         btnSave = findViewById(R.id.save);
+        textInputLayout = findViewById(R.id.roleMenu);
+        autoCompleteTextView = findViewById(R.id.autoCompleteTextView);
         dataList = new ArrayList<>();
 
         employeeViewModel = new ViewModelProvider(this).get(EmployeeViewModel.class);
@@ -85,7 +88,18 @@ public class EmployeeAddForm extends AppCompatActivity implements AdapterView.On
 
         adapterSetUp();
 
-        arrayAdapterSetUp();
+
+        String[] rolesItems = getResources().getStringArray(R.array.roles);
+
+        arrayAdapter = new ArrayAdapter(this, R.layout.drop_down_layout, rolesItems);
+        autoCompleteTextView.setAdapter(arrayAdapter);
+
+        autoCompleteTextView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                role = String.valueOf(parent.getItemAtPosition(position));
+            }
+        });
 
 
         btnSave.setOnClickListener(new View.OnClickListener() {
@@ -102,15 +116,6 @@ public class EmployeeAddForm extends AppCompatActivity implements AdapterView.On
         });
 
 
-    }
-
-    private void arrayAdapterSetUp() {
-        // For Role of an employee to display in spinner using Array Of some Objects
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                R.layout.support_simple_spinner_dropdown_item, employeeRoles);
-        spinner.setAdapter(adapter);
-        spinner.setPrompt("Select Role");
-        spinner.setOnItemSelectedListener(this);
     }
 
     private void adapterSetUp() {
@@ -140,17 +145,6 @@ public class EmployeeAddForm extends AppCompatActivity implements AdapterView.On
         });
     }
 
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-        role = parent.getItemAtPosition(position).toString();
-    }
-
-    @Override
-    public void onNothingSelected(AdapterView<?> parent) {
-        role = null;
-
-    }
-
     private void saveDataToRoomDB(String employeeName, String employeeSalary, String employeeCompanyName) {
 
         // instance of Employee Table class
@@ -163,7 +157,7 @@ public class EmployeeAddForm extends AppCompatActivity implements AdapterView.On
         } else if (TextUtils.isEmpty(employeeSalary)) {
             salary.setError("Please Enter Your employeeSalary");
         } else if (TextUtils.isEmpty(role)) {
-            companyName.setError("Please Select Role");
+            autoCompleteTextView.setError("Please Select Role");
         } else if (TextUtils.isEmpty(employeeCompanyName)) {
             companyName.setError("Please Enter Your employeeCompanyName");
         } else {

@@ -51,6 +51,7 @@ public interface EmployeeDao {
     @Query("delete from EmployeeDetails")
     void deleteAllData();
 
+
 }
     /*
        @Query("UPDATE EmployeeDetails SET text = :sText WHERE ID = sID")
